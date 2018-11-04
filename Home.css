@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+body{
+  margin: 0;
+  padding: 0;
+  background: #000;
+  font-family: "Quicksand", sans-serif;
+}
+
+a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #000;
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  top: 0px;
+  left: 0px;
+  z-index: 9999;
+}
+
+.navbar__title img{
+  height: 100%;
+}
+
+.navbar__title{
+  height: 40px;
+}
+
+.navbar__link{
+  padding: 0px;
+  display: inline-block;
+  font-size: 20px;
+  color: #fff;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.navbar__link:hover{
+  cursor: pointer;
+  color: rgb(255, 233, 0);
+  text-decoration: none;
+}
+
+
+.neon{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  padding: 0 20px;
+  color: #000000;
+  text-shadow: 0 0 20px rgb(255, 233, 0);
+  font-size: 200px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.neon:after{
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0 20px;
+  z-index: -1;
+  color: rgb(255, 233, 0);
+  filter: blur(15px);
+}
+
+.neon:before{
+  content:" ";
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  z-index: -2;
+  opacity: 0.5;
+  filter: blur(40px);
+  background: rgb(255, 233, 0);
+  transition: all 1s;
+}
+
+.neon:hover{
+  color: #ededed;
+}
+
+.neon:hover::before{
+  background: rgb(237, 0, 229);
+}
+
+
+.btn{
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  color: #fff;
+  font-size: 24px;
+  text-decoration: none;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #fcd600, #ffe900, #ed00e5, #fcd600);
+  background-size: 300%;
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:hover{
+  animation: animate 16s linear infinite;
+  text-decoration: none;
+}
+@keyframes animate{
+  0%{
+    background-position: 0%;
+  }
+  100%{
+    background-position: 400%;
+  }
+}
+.btn:before{
+  content:'';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(90deg, #fcd600, #ffe900, #ed00e5, #fcd600);
+  background-size: 300%;
+  border-radius: 40px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.btn:hover:before{
+  filter: blur(5px);
+  opacity: 0.8;
+  animation: animate 16s linear infinite;
+}

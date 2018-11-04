@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <title>工作日-假日佔比</title>
+    <style>
+		
+        body {
+          font-size: 20pt;
+          font-family: 'Microsoft JhengHei', cursive;
+          fill: #000;
+        }        
+        
+        #chart{
+          padding-top: 80px;
+        }         
+        
+		.c3-axis-y text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;	
+		}
+
+		.c3-axis-y2 text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;		
+		}
+
+		.c3-axis-x text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;
+		}
+
+		.c3-legend-item text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 000;
+
+		}
+	  	  
+		path {
+			stroke: lightgrey !important;
+		}
+
+		.c3 .c3-chart-arc text {
+			fill: #3c3c3c;		  
+		}		
+		 
+         
+        #chart,
+		.container {
+		  float: top;
+          
+		}
+
+		.legend span {
+		  display: inline-block;
+		  margin-left: 370px;
+		  margin-right: 0px;
+		  padding: 5px;
+          
+		}
+        
+		
+		.container .legend {
+		  width: 760px;
+		  height: 430px;
+		  //overflow: scroll;
+		  font-size: 12px;
+          
+		}
+        
+    </style>
+  </head>
+
+	<!-- Load c3.css -->
+	<link href="lib/c3/c3.css" rel="stylesheet">
+
+	<!-- Load d3.js and c3.js -->
+	<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+	<script src="lib/c3/c3.min.js"></script>
+
+
+	<div id="chart"></div>
+
+	<script>
+	var chart = c3.generate({
+	
+		bindto: '#chart',
+		
+		data: {
+			columns: [
+				['工作日', 3055524],
+				['假日', 1063288],
+			],
+			
+			type: 'pie',		
+            
+            
+		},
+		
+		pie: {
+			label: {
+                format: function(value, ratio, id) {
+                    ratio = d3.format(".1%")(ratio); // format ratio
+                    value = d3.format(",")(value);
+                    return [ratio, "\n"+value]; // used to pass values to the onrender function
+                }
+			}
+		},		
+		
+		color: {
+			pattern: ['#8e8e8e', '#ff7575', '#ffbb78', '#1f77b4', '#9d9d9d']
+		},		
+        
+        legend: {
+			show: true ,
+            padding : 40
+            
+		},
+
+	});
+	
+	d3.select('#chart').selectAll('text.c3-text').style('fill', '#3c3c3c');
+
+
+	</script>

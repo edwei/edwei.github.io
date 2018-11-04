@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 20px;
+        padding-left: 10px;
+      }
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
+    </style>
+  </head>
+
+<body>
+  <div id="map"></div>
+  <script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 13,
+      center: {lat: 25.0842, lng: 121.5922},
+      mapTypeControl:false,
+      styles: map_style
+
+    });
+
+    var gradient = [
+            //'rgba(255, 255, 0, 0)',
+            //'rgba(0, 0, 255, 1)',
+            'rgba(191, 0, 255, 1)',
+            'rgba(127, 0, 255, 1)',
+            'rgba(63, 0, 255, 1)',
+            'rgba(0, 0, 255, 1)',
+            //'rgba(0, 223, 0, 1)',
+            //'rgba(0, 191, 0, 1)',
+            //'rgba(0, 159, 0, 1)',
+            'rgba(180, , 0, 1)',
+            'rgba(220, 0, 100, 1)',
+            'rgba(255, 0, 15, 1)',
+            'rgba(255, 0, 0, 0)'
+            ];
+
+    var heatmap = new google.maps.visualization.HeatmapLayer({
+      map: map,
+      data: [
+        {location: new google.maps.LatLng(25.057787, 121.553533), weight: 9},
+        {location: new google.maps.LatLng(25.058186, 121.563480), weight: 10},
+        {location: new google.maps.LatLng(25.063086, 121.565417), weight: 5},
+        {location: new google.maps.LatLng(25.059949, 121.578891), weight: 7},
+        {location: new google.maps.LatLng(25.064943, 121.585013), weight: 7},
+        {location: new google.maps.LatLng(25.068614, 121.592989), weight: 5},
+        {location: new google.maps.LatLng(25.057708, 121.592819), weight: 5},
+        {location: new google.maps.LatLng(25.054932, 121.605005), weight: 6},
+        {location: new google.maps.LatLng(25.057343, 121.615645), weight: 6},
+        {location: new google.maps.LatLng(25.058665, 121.624828), weight: 3},
+        {location: new google.maps.LatLng(25.066983, 121.624656), weight: 3},
+        {location: new google.maps.LatLng(25.076389, 121.617619), weight: 3},
+        {location: new google.maps.LatLng(25.068538, 121.615388), weight: 4},
+        {location: new google.maps.LatLng(25.077633, 121.625858), weight: 2},
+        {location: new google.maps.LatLng(25.072113, 121.607320), weight: 5},
+        {location: new google.maps.LatLng(25.087272, 121.623713), weight: 0.8},
+        {location: new google.maps.LatLng(25.098544, 121.610150), weight: 0.8},
+        {location: new google.maps.LatLng(25.113237, 121.616330), weight: 0.8},
+        {location: new google.maps.LatLng(25.112847, 121.603280), weight: 0.8},
+        {location: new google.maps.LatLng(25.099085, 121.589376), weight: 0.8},
+        {location: new google.maps.LatLng(25.102417, 121.553916), weight: 2},
+        {location: new google.maps.LatLng(25.109960, 121.558634), weight: 2},
+        {location: new google.maps.LatLng(25.111051, 121.566190), weight: 0.8},
+        {location: new google.maps.LatLng(25.085017, 121.601654), weight: 3},
+        {location: new google.maps.LatLng(25.085637, 121.591097), weight: 4},
+        {location: new google.maps.LatLng(25.081595, 121.594102), weight: 7},
+        {location: new google.maps.LatLng(25.088279, 121.586976), weight: 4},
+        {location: new google.maps.LatLng(25.083973, 121.556837), weight: 7},
+        // {location: new google.maps.LatLng(25.079247, 121.533176), weight: 5}, 偏離預測區域
+        {location: new google.maps.LatLng(25.084966, 121.563008), weight: 5},
+        {location: new google.maps.LatLng(25.080459, 121.567683), weight: 10},
+        {location: new google.maps.LatLng(25.079196, 121.580064), weight: 7},
+        {location: new google.maps.LatLng(25.075458, 121.575392), weight: 9}
+      ],
+      radius: 50,
+      opacity: 0.6,
+      //gradient: gradient,
+    });
+
+    var polygonPath = new google.maps.Polygon({
+    path: polygonPathPoints,
+    strokeColor: '#000',
+    strokeOpacity: .9,
+    strokeWeight: 1,
+    //strokePosition: google.maps.StrokePosition.CENTER,
+    fillColor: '#ffff',
+    fillOpacity: 0,
+    map:map
+    });
+  }
+
+  var polygonPathPoints = [
+    {lat: 25.115518, lng: 121.551408},
+    {lat: 25.052083, lng: 121.551408},
+    {lat: 25.052083, lng: 121.628658},
+    {lat: 25.115518, lng: 121.628658},
+    {lat: 25.115518, lng: 121.613208},
+    {lat: 25.052083, lng: 121.613208},
+    {lat: 25.052083, lng: 121.597758},
+    {lat: 25.115518, lng: 121.597758},
+    {lat: 25.115518, lng: 121.582308},
+    {lat: 25.052083, lng: 121.582308},
+    {lat: 25.052083, lng: 121.566858},
+    {lat: 25.115518, lng: 121.566858},
+    {lat: 25.115518, lng: 121.551408},
+    {lat: 25.102831, lng: 121.551408},
+    {lat: 25.102831, lng: 121.628658},
+    {lat: 25.090144, lng: 121.628658},
+    {lat: 25.090144, lng: 121.551408},
+    {lat: 25.077457, lng: 121.551408},
+    {lat: 25.077457, lng: 121.628658},
+    {lat: 25.06477, lng: 121.628658},
+    {lat: 25.06477, lng: 121.551408},
+    {lat: 25.115518, lng: 121.551408},
+    {lat: 25.115518, lng: 121.628658},
+  ];
+
+  var map_style = [
+{
+    "featureType": "poi",
+    "elementType": "all",
+    "stylers": [
+        {
+            "hue": "#fff"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "poi.business",
+    "elementType": "label",
+    "stylers": [
+        {
+            "hue": "#fff"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+{
+    "featureType": "administrative",
+    "elementType": "all",
+    "stylers": [
+        {
+            "hue": "#fff"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "road",
+    "elementType": "labels",
+    "stylers": [
+        {
+            "hue": "#ffffff"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "water",
+    "elementType": "labels",
+    "stylers": [
+        {
+            "hue": "#000000"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": -100
+        },
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+        {
+            "hue": "#a0fdff"
+        },
+        {
+            "saturation": -50
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+{
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+        {
+            "hue": "#bbbbbb"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 26
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+{
+    "featureType": "road.local",
+    "elementType": "all",
+    "stylers": [
+        {
+            "hue": "#ffffff"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": 100
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+{
+    "featureType": "transit",
+    "elementType": "labels",
+    // 車站、捷運站站名標示
+    // 捷運路線預設開啟
+    "stylers": [
+        {
+            "hue": "#000000"
+        },
+        {
+            "saturation": 0
+        },
+        {
+            "lightness": 0
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+{
+    "featureType": "landscape",
+    "elementType": "labels",
+    "stylers": [
+        {
+            "hue": "#000000"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": -100
+        },
+        {
+            "visibility": "off"
+        }
+    ]
+},
+{
+    "featureType": "landscape",
+    "elementType": "geometry",
+    "stylers": [
+        {
+            "hue": "#dddddd"
+        },
+        {
+            "saturation": -100
+        },
+        {
+            "lightness": -3
+        },
+        {
+            "visibility": "on"
+        }
+    ]
+},
+
+]
+
+
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqk1uv_B3n6W_i3zvh-tnWPi07jWKcfYU&callback=initMap&libraries=visualization">
+  </script>
+</body>
+</html>

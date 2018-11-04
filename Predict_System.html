@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>588 Taxi - Predict System</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="Predict_System.css">
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	</head>
+	<body>
+		<nav class = "navbar">
+      <li class = "navbar__link navbar__title"><a href='./Home.html'><img src='https://upload.wikimedia.org/wikipedia/commons/4/4f/Bundesstra%C3%9Fe_588_number.svg'></a></li>
+      <li class = "navbar__link navbar__search"><div class="navbar__link">Predict System</div></li>
+      <li class = "navbar__link"><a class = "navbar__link" href='./History.html'>History</a></li>
+			<li class = "navbar__link"><a class = "navbar__link" href='./Members.html'>Members</a></li>
+    </nav>
+		<div class='main'>
+			<div class='container'>
+				<div class='container--main'>
+					<div class='sidebar'>
+						<div class='sidebar__toggle'></div>
+						<form method='POST'>
+							<h2 class='sidebar__title'>Input Parameters</h2>
+							<div class='sidebar__parameter'>Date</div>
+								<input type="text" name='Date' value='' placeholder='MM - DD - YY' id='date' class='sidebar__input' max='2019-04-30' autocomplete="off" required />
+							<div class='sidebar__parameter'>Time</div>
+								<input type='number' name='time' value='' placeholder='0 - 23' id='hour' class='sidebar__input' min='0' max='23' required/>
+							<div class='sidebar__parameter'>Temparature</div>
+								<div class='sidebar__temps'>
+									<input type="radio"  id='temp5' class='temp' name='temp' value='0' onclick='change_color(this.id)'>
+										<label for='temp5'><div class='label label_temp5'></div><i class="wi wi-snowflake-cold"></i></label>
+									<input type="radio"  id='temp15' class='temp' name='temp' value='1' onclick='change_color(this.id)'>
+										<label for='temp15'><div class='label label_temp15'></div><i class="wi wi-cloudy"></i></label>
+									<input type="radio"  id='temp35' class='temp' name='temp' value='3' onclick='change_color(this.id)' checked>
+										<label for='temp35'><div class='label label_temp35'></div><i class="wi wi-day-sunny"></i></label>
+								</div>
+							<input type='button' name='' value='Start' class='sidebar__input sidebar__submit' onclick="get_predict_array()">
+						</form>
+					</div>
+					<div class="map">
+						<h3 id='map__title'>Press
+							<div class='title-icon'></div>
+							for the future</h3>
+						<div id="map"></div>
+					</div>
+				</div>
+
+				<div class='container--secondary'>
+					<div class='tops'>
+						<h3 class='tops__title'>TOP 5</h3>
+
+						<div class='top'>
+							<div class='top__rank'>top 1</div>
+							<div class='top__info'>
+								<div class='top__info--left'>
+									<p class='top-id' id='top-1'></p>
+									<p class='top-number' id='count-top-1'></p>
+									<div class='top-future' id='top-future-1'>
+										<p class='top-future-text'>未來<br>兩小時</p>
+										<p class='top-number' id='top-1-future-1'></p>
+										<p class='top-number' id='top-1-future-2'></p>
+									</div>
+									<p class='top-demand'></p>
+								</div>
+								<div class='top__info--right'>
+									<ul id='info-1'>
+									</ul>
+								</div>
+								<div id='top-toggle-1'></div>
+							</div>
+						</div>
+						<div class='top'>
+							<div class='top__rank'>top 2</div>
+							<div class='top__info'>
+								<div class='top__info--left'>
+									<p class='top-id' id='top-2'></p>
+									<p class='top-number' id='count-top-2'></p>
+									<div class='top-future' id='top-future-2'>
+										<p class='top-future-text'>未來<br>兩小時</p>
+										<p class='top-number' id='top-2-future-1'></p>
+										<p class='top-number' id='top-2-future-2'></p>
+									</div>
+									<p class='top-demand'></p>
+								</div>
+								<div class='top__info--right'>
+									<ul id='info-2'>
+									</ul>
+								</div>
+								<div id='top-toggle-2'></div>
+							</div>
+						</div>
+						<div class='top'>
+							<div class='top__rank'>top 3</div>
+							<div class='top__info'>
+								<div class='top__info--left'>
+									<p class='top-id' id='top-3'></p>
+									<p class='top-number' id='count-top-3'></p>
+									<div class='top-future' id='top-future-3'>
+										<p class='top-future-text'>未來<br>兩小時</p>
+										<p class='top-number' id='top-3-future-1'></p>
+										<p class='top-number' id='top-3-future-2'></p>
+									</div>
+									<p class='top-demand'></p>
+								</div>
+								<div class='top__info--right'>
+									<ul id='info-3'>
+									</ul>
+								</div>
+								<div id='top-toggle-3'></div>
+							</div>
+						</div>
+						<div class='top'>
+							<div class='top__rank'>top 4</div>
+							<div class='top__info'>
+								<div class='top__info--left'>
+									<p class='top-id' id='top-4'></p>
+									<p class='top-number' id='count-top-4'></p>
+									<div class='top-future' id='top-future-4'>
+										<p class='top-future-text'>未來<br>兩小時</p>
+										<p class='top-number' id='top-4-future-1'></p>
+										<p class='top-number' id='top-4-future-2'></p>
+									</div>
+									<p class='top-demand'></p>
+								</div>
+								<div class='top__info--right'>
+									<ul id='info-4'>
+									</ul>
+								</div>
+								<div id='top-toggle-4'></div>
+							</div>
+						</div>
+						<div class='top'>
+							<div class='top__rank'>top 5</div>
+							<div class='top__info'>
+								<div class='top__info--left'>
+									<p class='top-id' id='top-5'></p>
+									<p class='top-number' id='count-top-5'></p>
+									<div class='top-future' id='top-future-5'>
+										<p class='top-future-text'>未來<br>兩小時</p>
+										<p class='top-number' id='top-5-future-1'>50</p>
+										<p class='top-number' id='top-5-future-2'>50</p>
+									</div>
+									<p class='top-demand'></p>
+								</div>
+								<div class='top__info--right'>
+									<ul id='info-5'>
+									</ul>
+								</div>
+								<div id='top-toggle-5'></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script src='Predict_System.js' charset='utf-8' type='text/javascript'></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	<!-- google map api reference-->
+	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+	<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhB-9p8I0f-VMQDWcgKFIpYVc8rGvEF50&callback=initMap" charset='utf-8'></script>
+
+	<script type='text/javascript'>
+		$(document).ready(function(){
+		  $('.sidebar__toggle').click(function(){
+		    $('.sidebar').toggleClass('active')
+		    $('.sidebar__toggle').toggleClass('active')
+		  })
+
+			$('.navbar__search').click(function(){
+		    $('.sidebar').toggleClass('active')
+		    $('.sidebar__toggle').toggleClass('active')
+		  })
+
+			$('#top-toggle-1').click(function(){
+				$('#top-toggle-1').toggleClass('moreinfo')
+		    $('#info-1').toggleClass('moreinfo')
+				$('#top-future-1').toggleClass('moreinfo')
+
+		  })
+
+			$('#top-toggle-2').click(function(){
+				$('#top-toggle-2').toggleClass('moreinfo')
+		    $('#info-2').toggleClass('moreinfo')
+				$('#top-future-2').toggleClass('moreinfo')
+		  })
+
+			$('#top-toggle-3').click(function(){
+				$('#top-toggle-3').toggleClass('moreinfo')
+		    $('#info-3').toggleClass('moreinfo')
+				$('#top-future-3').toggleClass('moreinfo')
+		  })
+
+			$('#top-toggle-4').click(function(){
+				$('#top-toggle-4').toggleClass('moreinfo')
+		    $('#info-4').toggleClass('moreinfo')
+				$('#top-future-4').toggleClass('moreinfo')
+		  })
+
+			$('#top-toggle-5').click(function(){
+				$('#top-toggle-5').toggleClass('moreinfo')
+		    $('#info-5').toggleClass('moreinfo')
+				$('#top-future-5').toggleClass('moreinfo')
+		  })
+
+
+		})
+
+	  $( function() {
+	    $( "#date" ).datepicker({
+				minDate: new Date(2018, 11 - 1, 1), // Date(year, month - day_start, day_end)
+				maxDate: new Date(2019, 04 - 1, 30),
+				dateFormat: "yy-mm-dd"
+			});
+
+	  });
+	</script>
+
+</html>

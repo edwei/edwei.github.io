@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <title>各月份日平均搭乘數</title>
+    <style>
+    
+        .c3 text {
+            stroek: 1px;
+            stroke-weight: 500;
+        }
+    
+        #chart{
+          padding-top: 30px;
+        }   
+    
+		.c3-axis-y text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;
+		}
+
+		.c3-axis-y2 text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;		
+		}
+
+		.c3-axis-x text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;
+		}
+
+		.c3-legend-item text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 000;
+		}
+	  
+		path {
+			stroke: #fff !important;
+		}        
+
+		.domain {
+			stroke: #000 !important;
+			stroke-width: 0.8px;
+		}
+		
+		.c3 .c3-axis-y path, .c3 .c3-axis-y2 path, .c3 .c3-axis-y line, .c3 .c3-axis-y2 line
+		.c3 .c3-axis-x path, .c3 .c3-axis-x line {   
+			stroke: #000;
+			stroke-width: 0.8px;
+	    }    
+
+    </style>
+  </head>
+  <body>
+	<!-- Load c3.css -->
+	<link href="lib/c3/c3.css" rel="stylesheet">
+
+	<!-- Load d3.js and c3.js -->
+	<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+	<script src="lib/c3/c3.min.js"></script>  
+
+	<div id="chart"></div>
+
+	<script> 
+    
+	var chart = c3.generate({
+		bindto: '#chart',
+		
+		data: {
+			x: 'x',			
+			columns: [
+				['x', '2016-02-01', '2016-03-01', '2016-04-01', '2016-05-01', '2016-06-01', '2016-07-01', '2016-08-01', '2016-09-01', '2016-10-01', '2016-11-01', '2016-12-01', '2017-01-01'],
+				['工作日', 11217, 12683, 12448, 12094, 12822, 12277, 11899, 11963, 12568, 12531, 12659, 13755],
+				['假日', 7328, 9309, 8586, 8851, 8695, 8964, 8932, 8416, 9689, 9594, 10004, 8831]
+			],
+			type: 'bar',
+			labels: {
+				format: d3.format(','),
+			}
+		},
+		
+		bar: {
+			width: {
+				ratio: 0.7 // this makes bar width 50% of length between ticks
+			}
+			// or
+			//width: 100 // this makes bar width 100px
+		},
+		
+		axis: {
+	        x: {
+				type: 'timeseries',
+				tick: {
+					culling: false,
+					rotate: -30,
+					format: '%Y-%m'					
+				}
+			},
+
+			y: {
+				max: 15000,
+				min: 5000,
+				padding: {top:0, bottom:0},
+				tick: {
+					format: d3.format(',')					
+				}
+			},
+		},
+		
+		color: {
+			pattern: ['#8e8e8e', '#ff7575', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+		},
+		
+		size: {
+			height: 430,
+			width: 760
+		},
+        
+        legend: {
+			show: true ,
+            padding : 30
+            
+		},
+        
+		
+		zoom: {
+            enabled: true
+        } 
+
+	});
+	
+//	d3.select('#chart').selectAll('text.c3-text').style('fill', '#3c3c3c');
+ 
+	
+	</script>
+  </body>
+</html>

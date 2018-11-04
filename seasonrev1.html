@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+  <head>
+    <title>四季每日平均搭乘數</title>
+    <style>
+    
+        #chart{
+          padding-top: 30px;
+        }       
+    
+		.c3-axis-y text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;	
+		}
+
+		.c3-axis-y2 text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;		
+		}
+
+		.c3-axis-x text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 0;
+		}
+
+		.c3-legend-item text { 
+			font-size: 12px; //change the size of the fonts
+			font-weight: 000;
+
+		}
+	  	  
+		path {
+			stroke: #000 !important;
+		}        
+
+		.domain {
+			stroke: #000 !important;
+			stroke-width: 0.3px;
+		}
+    
+		.c3 .c3-axis-y path, .c3 .c3-axis-y line, .c3 .c3-axis-x path, .c3 .c3-axis-x line {   
+			stroke: #000;
+			stroke-width: 0.3px;
+		}
+			
+		.c3 .c3-axis-y2 line {
+			stroke: #000;
+			stroke-width: 0.3px;
+		}
+		  
+    </style>
+  </head>
+
+	<!-- Load c3.css -->
+	<link href="lib/c3/c3.css" rel="stylesheet">
+
+	<!-- Load d3.js and c3.js -->
+	<script src="http://d3js.org/d3.v5.min.js" charset="utf-8"></script>
+	<script src="lib/c3/c3.min.js"></script>
+
+
+	<div id="chart"></div>
+
+	<script>
+    
+	var chart = c3.generate({
+		bindto: '#chart',
+		
+		data: {
+			x : 'x',
+			columns: [
+			['x', '春2-4月', '夏5-7月', '秋8-10月', '冬11-1月'],
+			['春', 10755, null, null, null],
+			['夏', null, 11277, null, null],
+			['秋', null, null, 11196, null],
+			['冬', null, null, null, 11776],
+			['溫度', 18.9, 28.6, 28.1, 19.9],
+			],
+			
+			groups: [
+				['春', '夏', '秋', '冬']
+			],
+			
+			type: 'bar',
+			
+            
+			types: {
+					溫度: 'line',
+			},
+			
+			axes: {
+				搭乘數: 'y',
+				溫度: 'y2'
+			},
+			
+			labels: 
+				true,
+                			
+		},
+		
+		color: {
+			pattern: ['#019858', '#ff9797', '#ffbb78', '#1f77b4', '#9d9d9d']
+		},
+		
+        legend: {
+			show: true ,
+            padding : 30
+            
+		},
+
+        
+		size: {
+			height: 430,
+			width: 510
+		},	
+		
+		axis: {
+			x: {
+				type: 'category', // this needed to load string x value
+				height: 30,
+                width: 220
+			},
+			
+			y: {
+				max: 12000,
+				min: 10200,
+				padding: {top:0, bottom: 0},
+				tick: {
+					format: d3.format(",")
+				},
+				label: {
+					text: '次數',
+					position: 'inner-bottom'
+				},
+			},
+			
+			y2: {
+				show: true,
+				max: 40,
+				min: 0,
+				padding: {top:0, bottom: 0},				
+				tick: {
+					format: d3.format(".0d")
+				},
+				label: {
+					text: '°C',
+					position: 'outer-bottom'
+				},
+				
+
+			},			
+		},	
+	});
+
+	d3.select(".c3-axis-y").attr("clip-path", null)
+	
+	d3.select(".c3-axis-y-label")
+    .style("text-anchor", "start")
+    .attr("transform", "translate(240, 280)");
+	
+	d3.select(".c3-axis-y2").attr("clip-path", null)
+	
+	d3.select(".c3-axis-y2-label")
+    .style("text-anchor", "start")
+    .attr("transform", "translate(370, 350)");   
+
+	</script>
